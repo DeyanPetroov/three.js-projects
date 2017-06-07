@@ -1,0 +1,115 @@
+<html>
+	<head>
+		<script src="three.min.js"></script>
+		<script src="human.js"></script>
+	</head>
+	
+	<body>
+		<script>		
+			renderer = new THREE.WebGLRenderer({antialias:true});
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+			renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
+			
+			scene = new THREE.Scene();
+			camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 2000 );
+			camera.position.set(0,3,150);
+
+			var light = new THREE.DirectionalLight('red',1);
+			light.position.set(4,1,0);
+			scene.add(light);
+			var light1 = new THREE.DirectionalLight('blue',1);
+			light1.position.set(-4,1,0);
+			scene.add(light1);
+			var light2 = new THREE.DirectionalLight('green',1);
+			light2.position.set(0,1,0);
+			scene.add(light2);
+			scene.add( new THREE.AmbientLight('white',0.5) );
+			
+			for (var i = 0; i < 500; i++)
+			{
+				if(i % 2 == 0)
+				{
+				   light.color.set( 'blue', 1);
+				 }
+				 else
+				 {
+				   light1.color.set( 'red',1);
+				 }
+			}
+			
+			var t = 0; 
+			function drawFrame()
+			{
+				requestAnimationFrame( drawFrame );
+				if (animate) animate(t++);
+				renderer.render( scene, camera );
+			}			
+			
+			
+			var пейка = формаКрайник([16,10,16,0,270,1,0.2,0.001]);
+			пейка.position.set(-20,-26,0);			
+			scene.add(пейка);
+			
+			
+			барабанист = мъжествен();
+			китарист = мъжествен();
+			
+			барабанист.position.set(-19,-18.5,0);
+			барабанист.таз.врът(0,0,40);
+			барабанист.тяло.врът(0,0,-45);
+			барабанист.л_крак.врът(30,-25,-55);
+				барабанист.л_коляно.врът(0,0,115);
+				барабанист.л_глезен.врът(0,0,-15);
+			барабанист.д_крак.врът(-30,25,-55);
+				барабанист.д_коляно.врът(0,0,115);
+				барабанист.д_глезен.врът(0,0,-15);
+			барабанист.л_ръка.врът(20,10,-45);
+				барабанист.л_лакът.врът(0,0,-120);
+				барабанист.л_китка.врът(10,30,0);
+			барабанист.д_ръка.врът(-20,-10,-45);
+				барабанист.д_лакът.врът(0,0,-120);
+				барабанист.д_китка.врът(-10,-30,0);
+				
+				китарист.position.set(50,0, 15);
+				китарист.rotation.y = Math.PI / 2;
+				китарист.л_крак.врът(5,0,0);
+				китарист.л_коляно.врът(0,0,10);
+			китарист.д_крак.врът(-5,0,0);
+				китарист.д_коляно.врът(0,0,10);
+			китарист.врат.врът(20,0,-30);
+			китарист.л_ръка.врът(10,-20,-40);
+			китарист.д_ръка.врът(0,0,-25);
+				китарист.д_лакът.врът(75,0,0);
+				китарист.д_китка.врът(40,70,30);
+				
+		
+			animate = function (t)
+			{			
+				scene.rotateY(0.003);
+				
+				барабанист.врат.врът(0,0,10*sin(5*t)-5);
+				барабанист.глава.врът(0,0,10*sin(5*t)-5);
+				барабанист.л_глезен.врът(0,0,-10-10*Math.pow(sin(t),100));
+				барабанист.д_глезен.врът(0,0,-10-10*Math.pow(sin(t+90), 100));
+				барабанист.л_лакът.врът(0,-20-20*sin(t),-90-20*sin(10*t));
+				барабанист.д_лакът.врът(0,40,-80-20*sin(5*t));
+				барабанист.л_крак.врът(30,-25,-55-15*Math.pow(sin(2*t),100));
+				барабанист.д_крак.врът(0,0,-55-15*Math.pow(sin(t),100));
+				
+				
+				китарист.врат.врът(0,0,10*sin(5*t)-5);
+				китарист.глава.врът(0,0,10*sin(5*t)-5);
+				
+				китарист.д_лакът.врът(60-20*sin(10*t),0,0);
+				китарист.д_китка.врът(60-20*sin(5*t),0,0);
+				китарист.л_лакът.врът(0,0,-120);
+				китарист.л_ръка.врът(10,-20,0);
+				китарист.л_китка.врът(-10-15*sin(5*t),0,-50);
+				китарист.д_глезен.врът(0,0,-10-10*Math.pow(sin(t+90), 100));				
+			}
+
+			drawFrame();
+		</script>
+	</body>
+</html>
